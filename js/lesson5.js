@@ -329,6 +329,547 @@ console.log(calculateAverage(27, 43, 2, 8, 36));
 
 ----------Методи map і flatMap-------------
 
+Функція з побічними ефектами — це функція, яка в процесі виконання може:
+
+змінювати або використовувати глобальні змінні
+змінювати значення аргументів посилального типу
+виконувати операції введення-виведення тощо
+
+Чиста функція (pure function) — це функція, результат якої залежить тільки від 
+значень переданих аргументів. За умови однакових аргументів вона завжди повертає
+ один і той самий результат і не має побічних ефектів, тобто не змінює значення 
+ аргументів.
+
+---------- задача ------------ 
+
+Функція changeEven(numbers, value) приймає масив чисел numbers і оновлює 
+кожен елемент, значення якого - це парне число, додаючи до нього значення
+ параметра value, який точно є числом.
+
+Виконай рефакторинг функції таким чином, щоб вона стала чистою - не змінювала масив
+ чисел numbers, а створювала, наповнювала і повертала новий масив з оновленими
+  значеннями.
+
+  function changeEven(numbers, value) {
+  const newArray = [];
+
+  for (let number of numbers) {
+    if (number % 2 === 0) {
+      newArray.push(number + value);
+    } else {
+      newArray.push(number);
+    }
+  }
+
+  return newArray;
+}
+
+---------- задача ------------ 
+
+В масиві planets зберігаються назви планет. Доповни код таким чином,
+ щоб у змінній planetsLengths вийшов масив, що буде складатися з довжин назв
+  кожної планети з масиву planets. Обов'язково використовуй метод map().
+
+const planets = ["Earth", "Mars", "Venus", "Jupiter"];
+
+const planetsLengths = planets.map(planet => planet.length);
+
+
+---------- задача ------------ 
+Створити масив який повертає назву моделей всіх авто
+
+const allCars = [
+  { make: "Honda", model: "CR-V", amount: 14, price: 24045 },
+  { make: "Honda", model: "Accord", amount: 10, price: 22455 },
+  { make: "Mazda", model: "CX-9", amount: 8, price: 31520 },
+  { make: "Mazda", model: "Mazda6", amount: 7, price: 24195 },
+  { make: "Toyota", model: "4Runner", amount: 19, price: 34210 },
+  { make: "Toyota", model: "Sequoia", amount: 16, price: 45560 },
+  { make: "Toyota", model: "Tacoma", amount: 4, price: 24320 },
+  { make: "Ford", model: "F-150", amount: 11, price: 27110 },
+  { make: "Ford", model: "Fusion", amount: 8, price: 22120 },
+  { make: "Ford", model: "Explorer", amount: 6, price: 31660 }
+];
+
+const getModels = (cars) => {
+  const arr = [];
+
+  cars.forEach(item => {
+    arr.push(item.model);
+  });
+
+  return arr;
+}
+
+console.log(getModels(allCars));
+
+*********************
+Другий варіант вирішення цієї самої задачі за допомогою метода map
+*********************
+
+const getModels = (cars) => {
+  return cars.map(item => item.model);
+}
+
+console.log(getModels(allCars));
+
+
+--------  Методи filter і find  ---------
+
+ /**
+ * Нехай функція filterByPrice повертає масив автомобілів, ціна яких менша за
+ * значення параметра threshold.
+ */
+
+const filterByPrice = (cars, threshold) => {
+  return cars.filter((item) => item.price < threshold);
+};
+
+console.table(filterByPrice(allCars, 30000));
+
+---------- задача ------------ 
+
+const cars = [
+  { make: "Honda", model: "CR-V", type: "suv", price: 24045 },
+  { make: "Honda", model: "Accord", type: "sedan", price: 22455 },
+  { make: "Mazda", model: "Mazda 6", type: "sedan", price: 24195 },
+  { make: "Mazda", model: "CX-9", type: "suv", price: 31520 },
+  { make: "Toyota", model: "4Runner", type: "suv", price: 34210 },
+  { make: "Toyota", model: "Sequoia", type: "suv", price: 45560 },
+  { make: "Toyota", model: "Tacoma", type: "truck", price: 24320 },
+  { make: "Ford", model: "F-150", type: "truck", price: 27110 },
+  { make: "Ford", model: "Fusion", type: "sedan", price: 22120 },
+  { make: "Ford", model: "Explorer", type: "suv", price: 31660 }
+];
+
+// Шукаємо машину за моделлю
+
+
+const getByModel = (array, model) => {
+  return array.find(item => item.model == model);
+}
+
+console.log(getByModel(cars, "Sequoia"));
+console.log(getByModel(cars, "Fusion"));
+
+Методи filter і find
+Метод filter()
+
+
+
+Метод filter(callback) використовується для єдиної операції — фільтрації масиву. 
+Під фільтрацією масиву мається на увазі відбір усіх елементів з колекції за певним критерієм.
+
+---------- задача ------------
+
+Доповни код так, щоб у змінній evenNumbers був масив парних чисел із масиву numbers,
+ а у змінній oddNumbers — масив непарних. Обов'язково використовуй метод filter().
+
+const numbers = [17, 24, 82, 61, 36, 18, 47, 52, 73];
+
+const evenNumbers = numbers.filter(num => num % 2 === 0);
+const oddNumbers = numbers.filter(num => num % 2 !== 0);
+
+
+---------- задача ------------
+
+Масив books містить колекцію об'єктів книг, кожен з яких містить властивості title, author, rating.
+ Використовуючи метод filter(), доповни код таким чином, щоб:
+
+У змінній topRatedBooks утворився масив книг, рейтинг яких (властивість rating) 
+більший за або дорівнює значенню змінної MIN_RATING.
+У змінній booksByAuthor утворився масив книг, написаних автором з ім'ям
+ (властивість author), яке збігається зі значенням у змінній AUTHOR.
+
+
+const books = [
+  {
+    title: "The Last Kingdom",
+    author: "Bernard Cornwell",
+    rating: 8.38,
+  },
+  {
+    title: "Beside Still Waters",
+    author: "Robert Sheckley",
+    rating: 8.51,
+  },
+  {
+    title: "The Dream of a Ridiculous Man",
+    author: "Fyodor Dostoevsky",
+    rating: 7.75,
+  },
+  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
+  { title: "Enemy of God", author: "Bernard Cornwell", rating: 8.67 },
+];
+
+const MIN_RATING = 8;
+const AUTHOR = "Bernard Cornwell";
+
+const topRatedBooks = books.filter(book => book.rating >= MIN_RATING);
+const booksByAuthor = books.filter(book => book.author === AUTHOR);
+
+---------- задача ------------
+
+Оголошена змінна getUsersWithEyeColor
+Змінній getUsersWithEyeColor присвоєна стрілочна функція з параметрами (users, color)
+Для перебирання параметра users використовується метод filter()
+Якщо значення параметра color - це "blue", функція повертає масив об'єктів користувачів з іменами Moore Hensley, Sharlene Bush і Carey Barr
+Якщо значення параметра color - це "green", функція повертає масив об'єктів користувачів з іменами Ross Vazquez і Elma Head
+Якщо значення параметра color - це "brown", функція повертає масив об'єктів користувачів з іменами Blackburn Dotson і Sheree Anthony
+Якщо значення параметра color - це будь-який інший рядок, функція повертає порожній масив
+
+
+const getUsersWithEyeColor = (users, color) => {
+  return users.filter(user => user.eyeColor === color);
+};
+
+---------- задача ------------
+
+Доповни код функції getUsersWithAge(users, minAge, maxAge), щоб повернути масив користувачів, 
+вік (збережений у властивості age) яких потрапляє у заданий діапазон від minAge до maxAge.
+
+Поради:
+
+Використай метод filter() для створення нового масиву, в якому зберігаються тільки елементи, 
+які задовольняють певну умову.
+Використай оператори >= (більше або дорівнює) та <= (менше або дорівнює), щоб відфільтрувати 
+користувачів, вік яких точно потрапляє у діапазон між мінімальним minAge та максимальним maxAge значеннями.
+
+const getUsersWithAge = (users, minAge, maxAge) => {
+    return users.filter(user => user.age >= minAge && user.age <= maxAge);
+};
+
+********************
+Метод find()
+
+Ти вже знаєш, що метод filter(callback) використовується для пошуку всіх елементів, що задовольняють умову.
+
+Метод find(callback) дозволяє знайти і повернути перший відповідний елемент, що задовольняє умову, 
+після чого перебирання масиву припиняється. Тобто він, на відміну від методу filter(callback), 
+шукає до першого збігу.
+
+---------- задача ------------
+
+Масив books містить колекцію об'єктів книг, кожен з яких містить властивості title, author, rating.
+
+Використовуючи метод find(), доповни код таким чином, щоб:
+
+У змінній bookWithTitle утворився об'єкт книги, назва якої (властивість title) збігається зі 
+значенням змінної BOOK_TITLE.
+У змінній bookByAuthor утворився об'єкт книги, автор якої (властивість author) збігається зі 
+значенням змінної AUTHOR.
+
+const books = [
+  {
+    title: "The Last Kingdom",
+    author: "Bernard Cornwell",
+    rating: 8.38,
+  },
+  {
+    title: "Beside Still Waters",
+    author: "Robert Sheckley",
+    rating: 8.51,
+  },
+  {
+    title: "The Dream of a Ridiculous Man",
+    author: "Fyodor Dostoevsky",
+    rating: 7.75,
+  },
+  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
+];
+const BOOK_TITLE = "The Dream of a Ridiculous Man";
+const AUTHOR = "Robert Sheckley";
+
+const bookWithTitle = books.find(book => book.title === BOOK_TITLE);
+const bookByAuthor = books.find(book => book.author === AUTHOR);
+
+
+
+
+----------  Методи every, some і reduce  -----------------
+Метод every()
+
+Метод every(callback) перевіряє, чи задовольняють усі елементи умову колбек-функції.
+
+Що повертає метод every()?
+
+true, якщо всі елементи масиву задовольняють умову, і false, якщо хоча б один елемент масиву 
+не задовольняє умову
+
+---------- задача ------------
+
+Доповни функцію isEveryUserActive(users) таким чином, щоб вона перевіряла, чи всі користувачі 
+зараз активні (властивість isActive) і повертала true або false.
+
+const isEveryUserActive = (users) => {
+  return users.every(user => user.isActive);
+};
+
+Метод some()
+
+Метод some(callback) перевіряє, чи задовольняє хоча б один елемент умову колбек-функції.
+
+Що повертає метод some()?
+
+true, якщо хоча б один елемент масиву задовольняє умову, та false, якщо жоден елемент 
+масиву не задовольняє умову
+
+---------- задача ------------
+
+Доповни функцію isAnyUserActive(users) таким чином, щоб вона перевіряла наявність 
+хоча б одного активного користувача (властивість isActive) і повертала true або false.
+
+const isAnyUserActive = (users) => {
+  return users.some(user => user.isActive);
+};
+
+Метод reduce()
+
+Метод reduce(callback, initialValue) використовується для послідовної обробки кожного елемента 
+масиву із збереженням проміжного результату. Трохи складніший за інші методи для засвоєння,
+ але результат вартий того.
+
+---------- задача ------------
+
+Ігровому сервісу необхідний функціонал підрахунку середнього часу, проведеного в іграх, 
+одним гравцем. У змінній players зберігається об'єкт, де ключ це ім'я гравця, 
+а значення - його ігровий час. У змінній playtimes зберігається масив значень
+ об'єкта players, тобто масив ігрового часу усіх гравців. Значенням змінної averagePlayTime 
+ буде середній час, проведений одним гравцем в іграх.
+
+Доповни код таким чином, щоб у змінній totalPlayTime вийшов загальний ігровий час з масиву 
+playtimes. Використовуй метод reduce().
+
+const players = {
+  mango: 1270,
+  poly: 468,
+  ajax: 710,
+  kiwi: 244,
+};
+const playtimes = Object.values(players); // [1270, 468, 710, 244]
+
+const totalPlayTime = playtimes.reduce((total, time) => total + time, 0);
+
+const averagePlayTime = totalPlayTime / playtimes.length;
+************
+Метод reduce() і масив об'єктів
+*************
+---------- задача ------------
+
+У змінній players зберігається масив об'єктів, кожен з яких має властивості name, playtime та gamesPlayed.
+
+Нашому сервісу необхідно розрахувати середній час, проведений в одній грі для кожного гравця, і отримати загальну суму цих значень часу у змінній totalAveragePlaytimePerGame. Розрахувати час для кожного з гравців можна, розділивши його час (властивість playtime) на кількість ігор (властивість gamesPlayed).
+
+Поради:
+
+Використовуй метод reduce() для ітерації по масиву players та обчислення загальної суми середнього часу на одну гру.
+Усередині колбек функції reduce(), поділи playtime гравця на gamesPlayed, щоб отримати середній час, витрачений на одну гру кожним гравцем.
+Накопичуй результат у змінній acc і повертай його в кінці кожної ітерації.
+Ініціалізуй параметр acc методу reduce() початковим значенням 0, щоб уникнути отримання NaN при виконанні обчислень.
+В результаті змінна totalAveragePlaytimePerGame міститиме загальну суму середнього часу на одну гру для всіх гравців.
+
+const players = [
+  { name: "Mango", playtime: 1270, gamesPlayed: 4 },
+  { name: "Poly", playtime: 469, gamesPlayed: 2 },
+  { name: "Ajax", playtime: 690, gamesPlayed: 3 },
+  { name: "Kiwi", playtime: 241, gamesPlayed: 1 },
+];
+
+const totalAveragePlaytimePerGame = players.reduce((acc, player) => {
+  return acc + player.playtime / player.gamesPlayed;
+}, 0);
+
+
+---------- задача ------------
+
+
+Доповни функцію calculateTotalBalance(users) таким чином, щоб вона рахувала і повертала
+ суму всіх коштів (властивість balance), які зберігають користувачі з масиву users.
+
+const calculateTotalBalance = (users) => {
+  return users.reduce((total, user) => total + user.balance, 0);
+};
+
+***********************************************************************
+Метод toSorted
+Метод toSorted()
+
+
+
+Метод toSorted() сортує елементи масиву.
+
+---------- задача ------------
+
+Змінна releaseDates - це масив чисел, років видання книг. Змінна authors - це масив рядків,
+ авторів книг.
+
+Доповни код таким чином, щоб у змінній ascendingReleaseDates вийшла копія масиву releaseDates, 
+відсортована за зростанням, а у змінній alphabeticalAuthors - копія масиву імен авторів authors, 
+відсортована за алфавітом. Використовуй метод toSorted()
+
+const releaseDates = [2016, 1967, 2008, 1984, 1973, 2012, 1997];
+const authors = [
+  "Tanith Lee",
+  "Bernard Cornwell",
+  "Robert Sheckley",
+  "Fyodor Dostoevsky",
+];
+
+const ascendingReleaseDates = releaseDates.toSorted();
+
+const alphabeticalAuthors = authors.toSorted();
+
+
+---------- задача ------------
+
+Змінна releaseDates - це масив чисел, років видання книг.
+
+Онлайн бібліотеці необхідно відображати книги, відсортовані за датою видання, за їх зростанням або
+ спаданням. Доповни код таким чином, щоб у змінній ascendingReleaseDates вийшла копія масиву 
+ releaseDates, відсортована за зростанням, а у змінній descendingReleaseDates - копія, 
+ відсортована за спаданням.
+
+const releaseDates = [2016, 1967, 2008, 1984, 1973, 2012, 1997];
+
+const ascendingReleaseDates = [...releaseDates].sort((a, b) => a - b);
+
+const descendingReleaseDates = [...releaseDates].sort((a, b) => b - a);
+
+---------- задача ------------
+
+Змінна authors - це масив рядків, авторів книг.
+
+Онлайн бібліотеці необхідно відображати книги, відсортовані за автором в алфавітному і в 
+
+зворотному алфавітному порядку. Доповни код таким чином, щоб у змінній authorsInAlphabetOrder
+ вийшла копія масиву authors, відсортована за алфавітом, а у змінній authorsInReversedOrder - копія,
+  відсортована у зворотному алфавітному порядку.
+
+const authors = [
+  "Tanith Lee",
+  "Bernard Cornwell",
+  "Robert Sheckley",
+  "Fyodor Dostoevsky",
+  "Howard Lovecraft",
+];
+
+const authorsInAlphabetOrder = authors.toSorted((a, b) => a.localeCompare(b));
+
+const authorsInReversedOrder = authors.toSorted((a, b) => b.localeCompare(a));
+
+---------- задача ------------
+
+Масив books містить масив об'єктів книг, кожен з яких містить властивості title, author, rating.
+
+Доповни код таким чином, щоб:
+
+У змінній sortedByAuthorName вийшов масив книг, відсортований за ім'ям автора в алфавітному порядку.
+У змінній sortedByReversedAuthorName вийшов масив книг, відсортований за ім'ям автора у зворотному алфавітному порядку.
+У змінній sortedByAscendingRating вийшов масив книг, відсортований за зростанням рейтингу.
+У змінній sortedByDescentingRating вийшов масив книг, відсортований за спаданням рейтингу.
+
+const books = [
+  {
+    title: "The Last Kingdom",
+    author: "Bernard Cornwell",
+    rating: 8.38,
+  },
+  {
+    title: "Beside Still Waters",
+    author: "Robert Sheckley",
+    rating: 8.51,
+  },
+  {
+    title: "The Dream of a Ridiculous Man",
+    author: "Fyodor Dostoevsky",
+    rating: 7.75,
+  },
+  {
+    title: "Redder Than Blood",
+    author: "Tanith Lee",
+    rating: 7.94,
+  },
+  {
+    title: "Enemy of God",
+    author: "Bernard Cornwell",
+    rating: 8.67,
+  },
+];
+
+
+const sortedByAuthorName = books.toSorted((a, b) => a.author.localeCompare(b.author));
+
+// Сортування за автором (Z → A)
+const sortedByReversedAuthorName = books.toSorted((a, b) => b.author.localeCompare(a.author));
+
+// Сортування за зростанням рейтингу
+const sortedByAscendingRating = books.toSorted((a, b) => a.rating - b.rating);
+
+// Сортування за спаданням рейтингу
+const sortedByDescentingRating = books.toSorted((a, b) => b.rating - a.rating);
+
+---------- задача ------------
+
+Масив books містить масив об'єктів книг, кожен з яких містить властивості title, author, rating.
+
+Доповни код таким чином, щоб у змінній names вийшов масив імен авторів в алфавітному порядку, 
+рейтинг книг яких більший за значення змінної MIN_BOOK_RATING. Використовуй ланцюжок методів.
+
+const books = [
+  {
+    title: "The Last Kingdom",
+    author: "Bernard Cornwell",
+    rating: 8.38,
+  },
+  {
+    title: "Beside Still Waters",
+    author: "Robert Sheckley",
+    rating: 8.51,
+  },
+  {
+    title: "The Dream of a Ridiculous Man",
+    author: "Fyodor Dostoevsky",
+    rating: 7.75,
+  },
+  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
+  {
+    title: "The Dreams in the Witch House",
+    author: "Howard Lovecraft",
+    rating: 8.67,
+  },
+];
+
+const MIN_BOOK_RATING = 8;
+
+const names = books
+  .filter(book => book.rating > MIN_BOOK_RATING)
+  .map(book => book.author)
+  .toSorted((a, b) => a.localeCompare(b));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
